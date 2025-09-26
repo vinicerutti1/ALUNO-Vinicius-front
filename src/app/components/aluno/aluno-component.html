@@ -1,24 +1,41 @@
-<h2>Cadastro de Alunos</h2>
+<h2 style="text-align: center;">Cadastro de Alunos</h2>
 
 <form (ngSubmit)="salvar()" #form="ngForm">
-  <input [(ngModel)]="alunoForm.nome" name="nome" placeholder="Nome" required minlength="3">
-  <input [(ngModel)]="alunoForm.curso" name="curso" placeholder="Curso" required minlength="3">
+  <input [(ngModel)]="alunoForm.nome" name="nome" placeholder="Nome" required minlength="3" #nome="ngModel">
+  <div *ngIf="nome.invalid && nome.touched && !form.submitted" style="color: red; font-size: 12px;">
+    Nome é obrigatório e deve ter pelo menos 3 caracteres.
+  </div>
+  <input [(ngModel)]="alunoForm.curso" name="curso" placeholder="Curso" required minlength="3" #curso="ngModel">
+  <div *ngIf="curso.invalid && curso.touched && !form.submitted" style="color: red; font-size: 12px;"></div>
+    Curso é obrigatório e deve ter pelo menos 3 caracteres.
+  </div>
   <input [(ngModel)]="alunoForm.telefone" name="telefone" placeholder="Telefone">
-  <button type="submit">{{ editando ? 'Atualizar' : 'Adicionar' }}</button>
+  <button 
+    type="submit" 
+    [disabled]="form.invalid || nome.invalid || curso.invalid"
+    [style.backgroundColor]="form.invalid || nome.invalid || curso.invalid ? '#e0e0e0' : '#007bff'"
+    [style.color]="form.invalid || nome.invalid || curso.invalid ? '#888' : '#fff'"
+    style="border: none; padding: 8px 16px; cursor: pointer;"
+  >
+    {{ editando ? 'Atualizar' : 'Adicionar' }}
+  </button>
 </form>
 
 <hr>
 
 <table>
   <tr>
-    <th>Nome</th><th>Curso</th><th>Telefone</th><th>Ações</th>
+    <th style="width: 30%;">Nome</th>
+    <th style="width: 30%;">Curso</th>
+    <th style="width: 20%;">Telefone</th>
+    <th style="width: 20%;">Ações</th>
   </tr>
   <tr *ngFor="let a of alunos">
     <td>{{ a.nome }}</td>
     <td>{{ a.curso }}</td>
     <td>{{ a.telefone }}</td>
     <td>
-      <button (click)="editar(a)">Editar</button>
+      <button style="margin-right: 5px;" (click)="editar(a)">Editar</button>
       <button (click)="deletar(a.id)">Excluir</button>
     </td>
   </tr>
