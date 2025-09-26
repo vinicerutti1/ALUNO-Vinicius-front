@@ -6,7 +6,7 @@
     Nome é obrigatório e deve ter pelo menos 3 caracteres.
   </div>
   <input [(ngModel)]="alunoForm.curso" name="curso" placeholder="Curso" required minlength="3" #curso="ngModel">
-  <div *ngIf="curso.invalid && curso.touched && !form.submitted" style="color: red; font-size: 12px;"></div>
+  <div *ngIf="curso.invalid && curso.touched && !form.submitted" style="color: red; font-size: 12px;">
     Curso é obrigatório e deve ter pelo menos 3 caracteres.
   </div>
   <input [(ngModel)]="alunoForm.telefone" name="telefone" placeholder="Telefone">
